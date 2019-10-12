@@ -1,0 +1,19 @@
+debug: true
+spring:
+  rabbitmq:
+    host: 192.168.56.101
+    username: admin
+    password: admin
+    virtual-host: first_vhost
+    publisher-confirms: true #  消息发送到交换机确认机制,是否确认回调
+    #publisher-returns: true  #  消息发送到交换机确认机制,是否返回回馈
+    template.mandatory: true
+    listener:
+      simple:
+        retry:
+        ####开启消费者重试,默认开启
+          enabled: true
+         ####最大重试次数（默认无数次）
+          max-attempts: 2
+        ####重试间隔
+          initial-interval: 1
