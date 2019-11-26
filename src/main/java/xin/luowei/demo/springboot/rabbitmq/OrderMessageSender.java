@@ -21,7 +21,7 @@ public class OrderMessageSender {
     @PostConstruct
     public void init() {
         rabbitTemplate.setConfirmCallback(confirmCallback);
-        // rabbitTemplate.setReturnCallback(returnCallback);
+        rabbitTemplate.setReturnCallback(returnCallback);
     }
 
     public void publishCreated(Order order) {

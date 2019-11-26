@@ -41,7 +41,7 @@ $ cd /data/rabbit/mnesia/rabbit@rabbit3/msg_stores/vhosts/B0G5EK6O7WOYX259KRYILG
 $ chattr +i 8KSG139G9C1HWTSXFCQF95MCF/2.idx 
 
 
-``` txt
+``` log
 2019-10-12 13:57:21.737 DEBUG 4293 --- [nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : DELETE "/order/5", parameters={}
 2019-10-12 13:57:21.737 DEBUG 4293 --- [nio-8080-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to public xin.luowei.demo.springboot.rabbitmq.Order xin.luowei.demo.springboot.rabbitmq.OrderController.cancell(java.lang.Integer)
 2019-10-12 13:57:21.738 DEBUG 4293 --- [nio-8080-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/json, application/*+json]
@@ -52,7 +52,7 @@ $ chattr +i 8KSG139G9C1HWTSXFCQF95MCF/2.idx
 2019-10-12 13:57:21.740  INFO 4293 --- [168.56.101:5672] x.l.d.s.rabbitmq.MsgSendConfirmCallBack  : 消息发送到exchange成功
 ```
 
-
+```log
 2019-10-12 14:42:19.062  INFO 8134 --- [nio-8080-exec-2] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [192.168.56.101:5672]
 2019-10-12 14:42:19.100  INFO 8134 --- [nio-8080-exec-2] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#71fb8301:0/SimpleConnection@eebd888 [delegate=amqp://admin@192.168.56.101:5672/first_vhost, localPort= 42826]
 2019-10-12 14:47:51.661 DEBUG 8134 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Failed to complete request: org.springframework.amqp.AmqpIOException: java.io.IOException
@@ -68,7 +68,7 @@ com.rabbitmq.client.ShutdownSignalException: channel error; protocol method: #me
         at com.rabbitmq.client.impl.AMQConnection$MainLoop.run(AMQConnection.java:597) ~[amqp-client-5.4.3.jar:5.4.3]
         at java.base/java.lang.Thread.run(Thread.java:834) ~[na:na]
 
-
+```
 
 
         

@@ -9,6 +9,7 @@ import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.FanoutExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +61,7 @@ public class RabbitConfiguration {
 
     @Bean
     Queue oderChangedQueue() {
-        Map<String, Object> immutableMap =null;// of("x-dead-letter-exchange", rabbitTopicProperties.dlxExchange());
+        Map<String, Object> immutableMap = of("x-dead-letter-exchange", rabbitTopicProperties.dlxExchange());
         return new Queue(rabbitTopicProperties.bizQueue(RabbitTopicProperties.CHANGED), true, false, false,
                 immutableMap);
     }
@@ -74,7 +75,7 @@ public class RabbitConfiguration {
     Queue fanoutQueue() {
         return new Queue(rabbitTopicProperties.fanoutQueue(), true, false, false);
     }
-    // @Qualifier("dlxExchange") 
+
     @Bean
     Binding bindingDlx(Queue dlxQueue, TopicExchange dlxExchange) {
         return BindingBuilder.bind(dlxQueue).to(dlxExchange).with("#");
@@ -84,25 +85,32 @@ public class RabbitConfiguration {
     Binding bindingFanout(Queue fanoutQueue, FanoutExchange fanoutExchange) {
         return BindingBuilder.bind(fanoutQueue).to(fanoutExchange);
     }
-//@Qualifier("bizExchange") 
+
     @Bean
     Binding bindingCreated(Queue oderCreatedQueue, TopicExchange bizExchange) {
         return BindingBuilder.bind(oderCreatedQueue).to(bizExchange).with(rabbitTopicProperties.createRoutingKey());
     }
-//@Qualifier("bizExchange") 
+
     @Bean
     Binding bindingDeal(Queue oderDealQueue, TopicExchange bizExchange) {
         return BindingBuilder.bind(oderDealQueue).to(bizExchange).with(rabbitTopicProperties.dealRoutingKey());
     }
-//@Qualifier("bizExchange") 
+
     @Bean
     Binding bindingChange(Queue oderChangedQueue, TopicExchange bizExchange) {
         return BindingBuilder.bind(oderChangedQueue).to(bizExchange).with(rabbitTopicProperties.changedRoutingKey());
     }
 
-    /*
-     * @RabbitListener(queues = queueName) public void receive(String message){ int
-     * i = 1/0; System.out.println("收到消息："+ message); }
-     */
+    @RabbitListener(queues = "queue.order.deal")
+    public void receiveChanged(Order message) {
+        System.out.println("收到消息：" + message);
+       
+    }
+
+    @RabbitListener(queues = "queue.order.created")
+    public void receiveCreated(Order message) {
+        System.out.println("收到消息：" + message);
+        int i = 1 / 0;
+    }
 
 }
